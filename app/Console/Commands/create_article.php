@@ -46,12 +46,37 @@ class create_article extends Command
         $this->articles = $articles->articles;
         foreach($articles->articles as $article){
  
-            $newArticle = Article::create([
-            'title'=>$article->title,
-            'description'=>Str::limit($article->description,100),
-            'content'=>$article->content,
-            'slug'=>Str::slug($article->title),
+
+            //catégorie create 
+
+            $newCategory = Category::firstOrCreate([
+                'name' =>$article->source->name
+            ],[
+                'name' =>$article->source->name,
+                'slug' =>Str::slug($article->source->name),
             ]);
+
+            //User create
+            if(!is_null($article->author)){
+                $newUser = User::firstOrCreate([
+                    'name' =>$article->author
+                ],[
+                    'name' =>$article->source->name,
+                    'email'=>Str::slug($articles->author). '@' .Str::slug($article->author) . '.com',
+                    'password' =>bcrypt(Str::random()),
+                ]);
+            }
+
+            else {
+                $newUser = User::find(1);
+            }
+
+            //$newArticle = Article::create([
+            //'title'=>$article->title,
+            //'description'=>Str::limit($article->description,100),
+            //'content'=>$article->content,
+            //'slug'=>Str::slug($article->title),
+            //]);
         }
     }
 }

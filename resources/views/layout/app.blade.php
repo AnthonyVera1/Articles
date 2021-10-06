@@ -25,6 +25,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ route('articles.index') }}">Articles</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ route('articles.create') }}">Ajouter article</a>
+                </li>
             </ul>
             <form class="d-flex" method="POST" action="{{ route('articles.search') }}">
                 @csrf
