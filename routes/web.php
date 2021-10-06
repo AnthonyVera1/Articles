@@ -122,6 +122,8 @@ Route::prefix('articles')->name('articles.')->group(function() {
         ->name('index');
     Route::get('create', [ArticlesController::class, 'create'])
         ->name('create');
+    Route::post('create', [ArticlesController::class, 'createPost'])
+        ->name('create');    
     Route::get('{id}', [ArticlesController::class, 'show'])
         ->name('show');
     Route::get('navigate/{id}/{direction}', [ArticlesController::class, 'navigate'])

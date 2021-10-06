@@ -81,11 +81,29 @@ class ArticlesController extends Controller
     return preg_match('/' . strtolower($request->input('search')) . '/', strtolower($article['title']));
     });
     
-    // On retourne une vue avec nos résultats
     return view('articles.index')->with('articles', $results->all());
+
     }
 
-    public function create() {
-        
+    //public function createArticle(Request $request) {
+    //    return view('create-article');
+    //}
+
+    public function CreateArticles(Request $request) {
+
+        $this->validate($request, [
+            'title' => 'required',
+            'description'=>'required',
+            'content' => 'required',
+            'category' => 'required'
+            //'slug' => 'required'
+        ]);
+
+        'App\Models\Article'::create($request->all());
+    
+        return back()->with('success', 'Les données ont été enregistrées avec succès.');
     }
+    
+
 }
+
